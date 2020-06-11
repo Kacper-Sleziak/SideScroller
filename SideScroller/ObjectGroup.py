@@ -36,12 +36,12 @@ class ObjectGroup:
             self.itemList.append(Item(self.width + 30, self.height - 70, self.vel, 2))
             self.itemList.append(Item(self.width + 320, self.height - 170, self.vel, 3))
             self.itemList.append(Item(self.width + 370, self.height - 170, self.vel, 1))
-            self.entityList.append(Entity(self.width + 130, self.height - 150, self.vel))
+            self.entityList.append(Entity(self.width + 180, self.height - 148, self.vel))
         if self.platformPattern == 3:
             self.platformList.append(Platform(self.width, self.height - 49, self.vel))
             self.platformList.append(Platform(self.width + 100, self.height - 98, self.vel))
             self.itemList.append(Item(self.width + 50, self.height - 20, self.vel, 2))
-            self.entityList.append(Entity(self.width + 170, self.height - 150, self.vel))
+            self.entityList.append(Entity(self.width + 170, self.height - 148, self.vel))
 
     def draw(self, win):
         for platform in self.platformList:
@@ -119,7 +119,7 @@ class ObjectGroup:
                 Effect(character, entity.effect)
                 del self.entityList[self.entityList.index(entity)]
 
-    def arrowsWithCharacter(self,character):
+    def arrowsWithCharacter(self, character):
         x1, x2, y1, y2 = character.x, character.x + character.width, character.y, character.y + character.height
         for arrow in self.arrowList:
             ax1, ax2, ay1, ay2 = arrow.x, arrow.x + arrow.width, arrow.y, arrow.y + arrow.height
@@ -128,6 +128,17 @@ class ObjectGroup:
             else:
                 Effect(character, arrow.effect)
                 del self.arrowList[self.arrowList.index(arrow)]
+
+    def arrowsWithPlatforms(self, arrows):
+        for arrow in arrows:
+            for platform in self.platformList:
+                ax1, ax2, ay1, ay2 = arrow.x, arrow.x + arrow.width, arrow.y, arrow.y + arrow.height
+                px1, px2, py1, py2 = platform.x, platform.x + platform.width, platform.y, platform.y + platform.height
+                if ax1 > px2 or ax2 < px1 or ay1 > py2 or ay2 < py1:
+                    pass
+                else:
+                    del arrows[arrows.index(arrow)]
+        return arrows
 
     def entityWithArrows(self, arrows):
         for arrow in arrows:
@@ -140,7 +151,6 @@ class ObjectGroup:
                     Effect(entity, arrow.effect)
                     del self.entityList[self.entityList.index(entity)]
                     del arrows[arrows.index(arrow)]
-
 
     def __del__(self):
         print("group destroyed")

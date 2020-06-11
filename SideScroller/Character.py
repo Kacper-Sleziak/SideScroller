@@ -21,7 +21,6 @@ class Character(Entity):
         self.isShooting = False
         self.canFall = False
         self.jumpCount = 3
-        self.crouchCount = 16
         self.shootTime = 0
         self.gravity = 3
 
@@ -41,30 +40,36 @@ class Character(Entity):
             self.jumpCount = 8
 
     def crouch(self):
-        if self.crouchCount >= 0 and not self.isJumping and self.isCrouching == True:
-            if self.crouchCount == 16:
+        if not self.isJumping and self.isCrouching:
+            if self.height == self.crouchHeight:
+                pass
+            else:
                 self.height = self.crouchHeight
                 self.y += self.crouchHeight
-            self.crouchCount -= 1
-        elif self.crouchCount < 0:
             self.isCrouching = False
-            self.height = self.standHeight
-            self.y -= self.crouchHeight
-            self.crouchCount = 16
+        elif not self.isCrouching:
+            if self.height == self.standHeight:
+                pass
+            else:
+                self.height = self.standHeight
+                self.y -= self.crouchHeight
+
 
     def shoot(self):
-        if self.isShooting and self.shootTime == 0:
-            if self.mana >= 20:
-                self.isShooting = True
-                self.shootTime = 10
+        if self.isShooting:
+            self.isShooting = False
+            if self.mana >= 20 and self.shootTime == 0:
+                self.shootTime = 11
                 arrow = Arrow(self.x + self.width, self.y + self.height * 0.5, (0, 0, 255), 8)
                 self.mana -= 20
                 return arrow
-        elif self.shootTime > 0:
-            self.shootTime -= 1
-            if self.shootTime == 0:
-                self.isShooting = False
-
+            elif self.shootTime > 0:
+                self.shootTime -= 1
+        else:
+            if self.shootTime > 0:
+                self.shootTime -= 1
+            else:
+                pass
 
     def addMana(self, amount):
         if 100 > self.mana + amount > 0:

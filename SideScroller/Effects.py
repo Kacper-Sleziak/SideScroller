@@ -10,7 +10,7 @@ def Effect(character, id):
     elif id == 4:
         del character
     elif id == 5:
-        character.addHealth(-50)
+        character.addHealth(-20)
     elif id == 6:
         character.addHealth(-100)
 

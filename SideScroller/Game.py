@@ -36,6 +36,7 @@ class Game:
         self.group.entityWithCharacter(self.obj)
         self.group.entityWithArrows(self.arrows)
         self.group.arrowsWithCharacter(self.obj)
+        self.arrows = self.group.arrowsWithPlatforms(self.arrows)
         self.group.entityShoot()
         self.obj.jump()
         self.obj.crouch()

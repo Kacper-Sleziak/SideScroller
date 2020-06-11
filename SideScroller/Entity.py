@@ -9,7 +9,7 @@ class Entity(Object):
         self.width = 20
         self.height = 50
         self.vel = vel
-        self.health = 50
+        self.health = 20
         self.color = (255, 100, 100)
         self.shootTime = 30
         self.effect = 5

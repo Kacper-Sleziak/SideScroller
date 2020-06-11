@@ -87,7 +87,7 @@ class Menus:
                 f.write(str(int(score)))
                 f.close()
 
-            font = pygame.font.SysFont("comicsans", 50)
+            font = pygame.font.SysFont("comicsansms", 30)
             self.win.blit(font.render("Game Over!", 1, (255, 255, 255)), (300, 50))
             self.win.blit(font.render("Your Score: " + str(int(score)), 1, (255, 255, 255)),
                           (300, 110))
@@ -124,7 +124,7 @@ class Menus:
         while game.obj.health != 0 and game.obj.stamina != 0:
             pygame.time.delay(40)
             for event in pygame.event.get():
-                if event == pygame.QUIT:
+                if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
             keys = pygame.key.get_pressed()
